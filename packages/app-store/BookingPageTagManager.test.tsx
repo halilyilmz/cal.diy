@@ -118,6 +118,30 @@ describe("BookingPageTagManager", () => {
     const scripts = screen.queryAllByTestId("cal-analytics-app-zoomvideo");
     expect(scripts.length).toBe(0);
   });
+
+  it("should suppress non-BAA ad trackers (metapixel) when baa-for-hipaa is enabled", () => {
+    render(
+      <BookingPageTagManager
+        eventType={{
+          metadata: {
+            apps: {
+              metapixel: {
+                enabled: true,
+                trackingId: "123456789",
+              },
+              "baa-for-hipaa": {
+                enabled: true,
+              },
+            },
+          },
+          price: 0,
+          currency: "USD",
+        }}
+      />
+    );
+    const scripts = screen.queryAllByTestId("cal-analytics-app-metapixel");
+    expect(scripts.length).toBe(0);
+  });
 });
 
 describe("handleEvent", () => {
