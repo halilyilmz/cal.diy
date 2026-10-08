@@ -47,11 +47,6 @@ function getAnalyticsApps(eventType: Parameters<typeof getEventTypeAppData>[0]) 
 
       // Suppress ad trackers without BAA on HIPAA-protected bookings to prevent unlawful PHI disclosure
       if (isHipaaProtected && (NON_BAA_AD_TRACKERS as readonly string[]).includes(appId)) {
-        if (process.env.NODE_ENV !== "production") {
-          console.warn(
-            `[Cal.com Compliance Guard] Suppressed '${appId}' on HIPAA-protected event type to prevent PHI transmission (45 CFR § 164.502 / FTC Section 5).`
-          );
-        }
         return acc;
       }
 
